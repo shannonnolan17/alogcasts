@@ -9,32 +9,54 @@
 //   anagrams('Hi there', 'Bye there') --> False
 
 function anagrams(stringA, stringB) {
-  const charMapA = {};
-  const charMapB = {};
+  const aCharMap = buildCharMap(stringA);
+  const bCharMap = buildCharMap(stringB);
 
-  replaceStringA = stringA.replace(/[^\w]/g, "").toLowerCase();
-  replaceStringB = stringB.replace(/[^\w]/g, "").toLowerCase();
+  if (Object.keys(aCharMap).length !== Object.keys(bCharMap).length) {
+    return false;
+  }
 
-  splitA = replaceStringA.split('')
-  splitB = replaceStringB.split('')
-
-  for (let char of splitA) {
-    if (charMapA[char]) {
-      charMapA[char]++;
-    } else {
-      charMapA[char] = 1;
+  for (let char in aCharMap) {
+    if(aCharMap[char] !== bCharMap[char]) {
+      return false;
     }
   }
 
-  for (let char of splitB) {
-    if (charMapB[char]) {
-      charMapB[char]++;
-    } else {
-      charMapB[char] = 1;
-    }
+  return true;
+}
+
+function buildCharMap(str) {
+  const charMap = {};
+  for (let char of str.replace(/[^\w]/g, "").toLowerCase()) {
+    charMap[char] = charMap[char] + 1 || 1;
   }
-
-
+  return charMap;
 }
 
 module.exports = anagrams;
+
+// mysolution:
+//   const charMapA = {};
+//   const charMapB = {};
+
+//   replaceStringA = stringA.replace(/[^\w]/g, "").toLowerCase();
+//   replaceStringB = stringB.replace(/[^\w]/g, "").toLowerCase();
+
+//   splitA = replaceStringA.split('')
+//   splitB = replaceStringB.split('')
+
+//   for (let char of splitA) {
+//     if (charMapA[char]) {
+//       charMapA[char]++;
+//     } else {
+//       charMapA[char] = 1;
+//     }
+//   }
+
+//   for (let char of splitB) {
+//     if (charMapB[char]) {
+//       charMapB[char]++;
+//     } else {
+//       charMapB[char] = 1;
+//     }
+//   }
